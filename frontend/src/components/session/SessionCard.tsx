@@ -3,6 +3,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Trash2, Clock } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import type { Session } from "@/api/types";
+import { useSessionStatusForSession } from "@/stores/sessionStatusStore";
+import { CompactStatusIndicator } from "@/components/ui/session-status-indicator";
 
 interface SessionCardProps {
   session: Session;
@@ -21,6 +23,8 @@ export const SessionCard = ({
   onToggleSelection,
   onDelete,
 }: SessionCardProps) => {
+  const sessionStatus = useSessionStatusForSession(session.id);
+
   return (
     <Card
       className={`p-3 cursor-pointer transition-all ${
@@ -55,6 +59,9 @@ export const SessionCard = ({
                   addSuffix: true,
                 })}
               </span>
+              {sessionStatus.type !== 'idle' && (
+                <CompactStatusIndicator sessionID={session.id} />
+              )}
             </div>
           </div>
         </div>

@@ -16,4 +16,5 @@ data/
 workspace/
 /config/
 temp/
+.pnpm-store/
 

@@ -171,7 +171,7 @@ export function SkillsList({ scope, directory }: SkillsListProps) {
         directory={directory}
       />
 
-      <AlertDialog open={!!deleteSkill} onOpenChange={(open) => !open && setDeleteSkill(null)}>
+      <AlertDialog open={!!deleteSkill} onOpenChange={(open: boolean) => !open && setDeleteSkill(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Skill</AlertDialogTitle>
