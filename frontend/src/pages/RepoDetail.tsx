@@ -14,9 +14,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { BranchSwitcher } from "@/components/repo/BranchSwitcher";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { Plug, FolderOpen, Plus, GitBranch } from "lucide-react";
-
-import { Loader2 } from "lucide-react";
+import { Plug, FolderOpen, Plus, GitBranch, Zap, Loader2 } from "lucide-react";
+import { RepoSkillsDialog } from "@/components/repo/RepoSkillsDialog";
 
 export function RepoDetail() {
   const { id } = useParams<{ id: string }>();
@@ -26,6 +25,7 @@ export function RepoDetail() {
   const [fileBrowserOpen, setFileBrowserOpen] = useState(false);
   const [switchConfigOpen, setSwitchConfigOpen] = useState(false);
   const [mcpDialogOpen, setMcpDialogOpen] = useState(false);
+  const [skillsDialogOpen, setSkillsDialogOpen] = useState(false);
   const pageRef = useRef<HTMLDivElement>(null);
   
   const handleSwipeBack = useCallback(() => {
@@ -142,6 +142,15 @@ export function RepoDetail() {
       <Header.Actions>
         <Button
           variant="outline"
+          onClick={() => setSkillsDialogOpen(true)}
+          size="sm"
+          className="hidden sm:flex text-foreground border-border hover:bg-accent transition-all duration-200 hover:scale-105"
+        >
+          <Zap className="w-4 h-4 sm:mr-2" />
+          <span className="hidden sm:inline">Skills</span>
+        </Button>
+        <Button
+          variant="outline"
           onClick={() => setMcpDialogOpen(true)}
           size="sm"
           className="hidden sm:flex text-foreground border-border hover:bg-accent transition-all duration-200 hover:scale-105"
@@ -174,6 +183,9 @@ export function RepoDetail() {
               <div className="h-px bg-border my-1" />
             </>
           )}
+          <DropdownMenuItem onClick={() => setSkillsDialogOpen(true)}>
+            <Zap className="w-4 h-4 mr-2" /> Skills
+          </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setMcpDialogOpen(true)}>
             <Plug className="w-4 h-4 mr-2" /> MCP
           </DropdownMenuItem>
@@ -213,6 +225,13 @@ export function RepoDetail() {
       <RepoMcpDialog
         open={mcpDialogOpen}
         onOpenChange={setMcpDialogOpen}
+        config={settings}
+        directory={repoDirectory}
+      />
+
+      <RepoSkillsDialog
+        open={skillsDialogOpen}
+        onOpenChange={setSkillsDialogOpen}
         config={settings}
         directory={repoDirectory}
       />
